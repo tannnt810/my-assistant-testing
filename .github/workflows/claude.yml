@@ -34,13 +34,33 @@ jobs:
         uses: actions/checkout@v4
         with:
           fetch-depth: 1
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      # BƯỚC quan trọng: Inject cấu hình đã có sẵn để không phải login
+      - name: Restore 9Router Session
+        run: |
+          mkdir -p ~/.9router
+          echo '${{ secrets.NINE_ROUTER_CONFIG }}' > ~/.9router/config.json
+
+      - name: Install & Start 9Router
+        run: |
+          npm install -g 9router
+          # Chạy background và bỏ qua việc mở trình duyệt (Headless mode)
+          9router --port 20128 & 
+          
+          # Đợi server sẵn sàng và kiểm tra log
+          sleep 8
+          curl -s http://localhost:20128/v1/models || echo "9Router is starting..."
 
       - name: Run Claude Code
         id: claude
         uses: anthropics/claude-code-action@v1
         with:
-          anthropic_api_base: ${{ secrets.ANTHROPIC_API_BASE }}
-          anthropic_api_key: ${{ secrets.ANTHROPIC_API_KEY }}
+          anthropic_api_base: "http://localhost:20128/v1"
+          anthropic_api_key: "sk-ant-9router-proxy-key" 
 
           # This is an optional setting that allows Claude to read CI results on PRs
           additional_permissions: |
