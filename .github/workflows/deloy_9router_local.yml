@@ -17,7 +17,7 @@ jobs:
 
       - name: Clone 9Router Database
         env:
-          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GH_TOKEN: ${{ secrets.NINE_ROUTER_DB_REPO_TOKEN }}
         run: |
           git config --global url."https://x-access-token:${GH_TOKEN}@github.com/".insteadOf "https://github.com/"
           git clone https://github.com/tannnt810/9router_db 9router_db
