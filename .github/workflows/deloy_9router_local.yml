@@ -14,6 +14,7 @@ jobs:
       - name: Install 9Router
         run: |
           npm install -g 9router
+          which 9router
 
       - name: Clone 9Router Database
         env:
