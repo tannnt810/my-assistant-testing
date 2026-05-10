@@ -14,7 +14,10 @@ jobs:
       - name: Install 9Router
         run: |
           npm install -g 9router
-          which 9router
+          9router --port 20128 & 
+          sleep 5
+          # Tìm kiếm file sqlite trong thư mục người dùng
+          find ~ -name "data.sqlite"
 
       - name: Clone 9Router Database
         env:
