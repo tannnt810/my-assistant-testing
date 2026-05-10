@@ -7,23 +7,6 @@ jobs:
     runs-on: ubuntu-latest
     environment: cloudflare
     steps:
-      - name: Verify Secrets are loaded
-        run: |
-          if [ -z "${{ secrets.CLOUDFLARE_API_TOKEN }}" ]; then
-            echo "❌ CLOUDFLARE_API_TOKEN is MISSING"
-            exit 1
-          else
-            echo "✅ CLOUDFLARE_API_TOKEN is present (Length: ${#TOKEN})"
-          fi
-          
-          if [ -z "${{ secrets.CLOUDFLARE_ACCOUNT_ID }}" ]; then
-            echo "❌ CLOUDFLARE_ACCOUNT_ID is MISSING"
-            exit 1
-          else
-            echo "✅ CLOUDFLARE_ACCOUNT_ID is present"
-          fi
-        env:
-          TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
       # 1. Clone code trực tiếp từ repo gốc của 9Router
       - name: Clone 9Router Source
         run: |
@@ -38,13 +21,12 @@ jobs:
       # 3. Cài đặt các thư viện cần thiết
       - name: Install Dependencies
         run: npm install
-      # - name: Build app
-      #   run: npm run build
+      - name: Build app
+        run: npm run build
 
       - name: Verify Wrangler Auth
         uses: cloudflare/wrangler-action@v3
         with:
           apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
           accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
-          command: |
-            pages project list
+          command: pages deploy .next --project-name=9router-app
