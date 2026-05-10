@@ -19,10 +19,10 @@ jobs:
           node-version: '24'
 
       # 3. Cài đặt các thư viện cần thiết
-      # - name: Install Dependencies
-      #   run: npm install
-      # - name: Build app
-      #   run: npm run build
+      - name: Install Dependencies
+        run: npm install
+      - name: Build app
+        run: npm run build
 
       - name: Deploy to CLOUDFLARE
         uses: cloudflare/wrangler-action@v3
