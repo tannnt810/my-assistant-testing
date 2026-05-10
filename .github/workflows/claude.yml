@@ -68,8 +68,9 @@ jobs:
       - name: Run Claude Code
         id: claude
         uses: anthropics/claude-code-action@v1
+        env:
+          ANTHROPIC_BASE_URL: "http://localhost:20128/v1"
         with:
-          anthropic_base_url: "http://localhost:20128/v1"
           anthropic_api_key: "sk-ant-api03-9routerproxykey-0000000000000000000000000000000000000000000000000000000000000000000000AA" 
 
           # This is an optional setting that allows Claude to read CI results on PRs
