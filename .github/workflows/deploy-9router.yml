@@ -20,8 +20,12 @@ jobs:
       # 3. Cài đặt các thư viện cần thiết
       - name: Install Dependencies
         run: npm install
-      - name: Build app
-        run: npm run build
+      # - name: Build app
+      #   run: npm run build
 
       - name: Verify Wrangler Auth
-        run: npx wrangler whoami --api-token="${{ secrets.CLOUDFLARE_API_TOKEN }}"
+        uses: cloudflare/wrangler-action@v3
+        with:
+          apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          command: |
+            pages project list
