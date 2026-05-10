@@ -22,9 +22,9 @@ jobs:
         run: npm install
 
       # 4. Deploy lên Cloudflare của BẠN
-      - name: Deploy to Cloudflare
+      - name: Deploy to Cloudflare Pages
         uses: cloudflare/wrangler-action@v3
         with:
           apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
           accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
-          command: deploy --name 9router-worker
+          command: pages deploy .next --project-name=9router-app
