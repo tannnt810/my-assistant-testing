@@ -28,12 +28,7 @@ jobs:
           mv -f 9router_db/data.sqlite ~/.9router/db/
 
       - name: Start 9Router
-        run: |
-          npm install -g 9router
-
-          mv -f 9router_db/data.sqlite ~/.9router/db/
-          9router --port 20128 & 
-          
+        run: |          
           # Đợi server sẵn sàng và kiểm tra log
           sleep 8
           curl --request POST \
