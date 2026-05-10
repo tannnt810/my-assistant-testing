@@ -1,45 +1,45 @@
 # My Assistant Testing
 
-A test repository for Claude Code GitHub Actions integration.
+Repository thử nghiệm cho tích hợp Claude Code với GitHub Actions.
 
-## Overview
+## Tổng quan
 
-This repository demonstrates the integration of Claude Code with GitHub Actions using 9Router as an API proxy layer.
+Repository này minh họa việc tích hợp Claude Code với GitHub Actions sử dụng 9Router làm lớp proxy API.
 
-## Features
+## Tính năng
 
-- GitHub Issues integration with Claude Code
-- Pull Request assistance
-- Automated code review and implementation
+- Tích hợp GitHub Issues với Claude Code
+- Hỗ trợ Pull Request
+- Tự động review và triển khai code
 
-## Setup
+## Cài đặt
 
-This repository uses 9Router as a proxy for the Anthropic API:
+Repository này sử dụng 9Router làm proxy cho Anthropic API:
 
-- 9Router runs on port `20128`
-- Claude Code connects via `http://localhost:20128/v1`
+- 9Router chạy trên cổng `20128`
+- Claude Code kết nối qua `http://localhost:20128/v1`
 
-## Usage
+## Cách sử dụng
 
-### Working with Issues
+### Làm việc với Issues
 
-1. Create an issue or comment on an existing one
-2. Tag `@claude` in your comment
-3. Claude Code will analyze and respond to your request
+1. Tạo một issue hoặc bình luận trên issue đã có
+2. Tag `@claude` trong bình luận của bạn
+3. Claude Code sẽ phân tích và trả lời yêu cầu của bạn
 
-### Working with Pull Requests
+### Làm việc với Pull Requests
 
-1. Open a pull request
-2. Add a review or comment with `@claude`
-3. Claude Code will review and provide feedback
+1. Mở một pull request
+2. Thêm review hoặc bình luận với `@claude`
+3. Claude Code sẽ review và đưa ra phản hồi
 
 ## Workflow
 
-The Claude Code workflow is defined in `.github/workflows/claude.yml` and handles:
-- Issue comments
-- PR reviews
-- Code implementation tasks
+Workflow của Claude Code được định nghĩa trong `.github/workflows/claude.yml` và xử lý:
+- Bình luận trên issues
+- Review PR
+- Các tác vụ triển khai code
 
-## License
+## Giấy phép
 
 MIT
