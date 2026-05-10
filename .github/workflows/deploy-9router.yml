@@ -5,6 +5,7 @@ on:
 jobs:
   deploy:
     runs-on: ubuntu-latest
+    environment: cloudflare
     steps:
       - name: Verify Secrets are loaded
         run: |
