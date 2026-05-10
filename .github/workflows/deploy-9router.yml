@@ -24,9 +24,9 @@ jobs:
       # - name: Build app
       #   run: npm run build
 
-      - name: Verify Wrangler Auth
+      - name: Deploy to CLOUDFLARE
         uses: cloudflare/wrangler-action@v3
         with:
           apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
           accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
-          command: whoami
+          command: pages deploy .next --project-name=9router-app
