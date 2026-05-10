@@ -37,23 +37,38 @@ jobs:
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: '20'
-
-      # BƯỚC quan trọng: Inject cấu hình đã có sẵn để không phải login
-      - name: Restore 9Router Session
-        run: |
-          mkdir -p ~/.9router
-          echo '${{ secrets.NINE_ROUTER_CONFIG }}' > ~/.9router/config.json
-
-      - name: Install & Start 9Router
+          node-version: '24'
+      - name: Install 9Router
         run: |
           npm install -g 9router
-          # Chạy background và bỏ qua việc mở trình duyệt (Headless mode)
+
+      - name: Clone 9Router Database
+        env:
+          GH_TOKEN: ${{ secrets.NINE_ROUTER_DB_REPO_TOKEN }}
+        run: |
+          git config --global url."https://x-access-token:${GH_TOKEN}@://github.com".insteadOf "https://://github.com"
+          git clone https://github.com/tannnt810/9router_db 9router_db
+          mv -f 9router_db/data.sqlite ~/.9router/db/
+
+      - name: Start 9Router
+        run: |
+          npm install -g 9router
+
+          mv -f 9router_db/data.sqlite ~/.9router/db/
           9router --port 20128 & 
           
           # Đợi server sẵn sàng và kiểm tra log
           sleep 8
-          curl -s http://localhost:20128/v1/models || echo "9Router is starting..."
+          curl --request POST \
+            --url http://localhost:20128/v1/chat/completions \
+            --header 'Authorization: Bearer your-api-key' \
+            --header 'content-type: application/json' \
+            --data '{
+            "model": "oc/minimax-m2.5-free",
+            "messages": [
+              {"role": "user", "content": "Who are you"}
+            ]
+          }'
 
       - name: Run Claude Code
         id: claude
